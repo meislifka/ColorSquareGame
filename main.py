@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 pygame.init()
 
 #Defining Colors
@@ -25,24 +26,52 @@ blueImage = pygame.image.load("./iBlue.png")
 redImage = pygame.image.load("./iRed.png")
 greenImage = pygame.image.load("./iGreen.png")
 yellowImage = pygame.image.load("./iYellow.png")
-loc1 = [(700/2)-100, 0]
 
-instruction = [blueImage, redImage, greenImage,yellowImage]
-#loc = [loc1, loc2, loc3, loc4]
+Blue = pygame.image.load("./Blue.png")
+Blue1 = pygame.image.load("./Blue1.png")
+Blue2 = pygame.image.load("./Blue2.png")
+Green = pygame.image.load("./Green.png")
+Green1 = pygame.image.load("./Green1.png")
+Green2 = pygame.image.load("./Green2.png")
+Red = pygame.image.load("./Red.png")
+Red1 = pygame.image.load("./Red1.png")
+Red2 = pygame.image.load("./Red2.png")
+Yellow = pygame.image.load("./Yellow.png")
+Yellow1 = pygame.image.load("./Yellow1.png")
+Yellow2 = pygame.image.load("./Yellow2.png")
+
+upperleftX = 160
+upperleftY = 150
+loc1 = [upperleftX, upperleftY]
+loc2 = [upperleftX+170, upperleftY]
+loc3 = [upperleftX, upperleftY+50]
+loc4 = [upperleftX+170, upperleftY+50]
+
+instruction = [Blue, Blue1, Blue2, Green, Green1, Green2, Red, Red1, Red2, Yellow, Yellow1, Yellow2]
+loc = [loc1, loc2, loc3, loc4]
  #font
 pygame.font.init() # you have to call this at the start, 
                    # if you want to use this module.
 my_font = pygame.font.SysFont('Arial', 30)
 
+
+inst = int(random.randint(0,11))
+counter = 3
 # -------- Main Program Loop -----------
 while play:
     # --- Main event loop
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT: # If user clicked close
               play = False # Flag that we are done so we can exit the while loop
-        
+        if event.type == pygame.MOUSEBUTTONUP:
+            inst = int(random.randint(0,11))
+            print("Correct")
+            counter = 3
+        if counter == 0 :
+            inst = int(random.randint(0,11))
+            counter = 3      
     
-    
+   
     
     # --- Game logic should go here
 
@@ -50,10 +79,18 @@ while play:
     # --- Drawing code should go here
     # First, clear the screen to white. 
     screen.fill(WHITE)
-    screen.blit(instruction[random.randint(0, 3)], (loc1))
+    screen.blit(instruction[inst],  ((700/2)-100, 60))
+    screen.blit(blueImage, loc1)
+    screen.blit(greenImage, loc2)
+    screen.blit(redImage, loc3)
+    screen.blit(yellowImage, loc4)
+
+    cText = my_font.render(str(int(counter)), False, (0, 0, 0))
+    screen.blit(cText, [0,0])
     
     
-    #text_surface = my_font.render('Click on matching color', False, (0, 0, 0))
+
+    
     
 
 
@@ -63,9 +100,14 @@ while play:
  
  
     # --- Go ahead and update the screen with what we've drawn.
+
     pygame.display.flip()
+        
      
     # --- Limit to 60 frames per second
+    
+    counter = counter -1
+
     clock.tick(1)
  
 #Once we have exited the main program loop we can stop the game engine:
