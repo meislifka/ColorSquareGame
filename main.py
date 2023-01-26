@@ -48,11 +48,13 @@ loc3 = [upperleftX, upperleftY+50]
 loc4 = [upperleftX+170, upperleftY+50]
 
 instruction = [Blue, Blue1, Blue2, Green, Green1, Green2, Red, Red1, Red2, Yellow, Yellow1, Yellow2]
+instruction1 = ["Blue", "Blue1", "Blue2", "Green", "Green1", "Green2", "Red", "Red1", "Red2", "Yellow", "Yellow1", "Yellow2"]
 loc = [loc1, loc2, loc3, loc4]
  #font
 pygame.font.init() # you have to call this at the start, 
                    # if you want to use this module.
 my_font = pygame.font.SysFont('Arial', 30)
+
 
 
 inst = int(random.randint(0,11))
@@ -61,11 +63,23 @@ counter = 3
 while play:
     # --- Main event loop
     for event in pygame.event.get(): 
+        
         if event.type == pygame.QUIT: # If user clicked close
               play = False # Flag that we are done so we can exit the while loop
         if event.type == pygame.MOUSEBUTTONUP:
+            print( pygame.mouse.get_pos())
+            mousePos = list(pygame.mouse.get_pos())
+            print(colorMatch())
+            coord = colorMatch()
+            print(coord[0])
+            print(coord[1])
+
+            if(mousePos[0]-coord[0] < 20 & mousePos[1]-coord[1] < 20):
+                print("correct")
+            print(type(pygame.mouse.get_pos()))
+            
             inst = int(random.randint(0,11))
-            print("Correct")
+            
             counter = 3
         if counter == 0 :
             inst = int(random.randint(0,11))
@@ -74,11 +88,24 @@ while play:
    
     
     # --- Game logic should go here
-
- 
+    def colorMatch():
+        c = instruction1[inst]
+        print("C0: " + c[0])
+        if(c[0]== 'Y'):
+            return [426, 242]
+        elif(c[0]== 'B'):
+            return [293,201]
+        elif(c[0]== 'G'):
+            return [422, 189]
+        else:
+            return [254, 240]
+        
+    
+    
     # --- Drawing code should go here
     # First, clear the screen to white. 
     screen.fill(WHITE)
+    
     screen.blit(instruction[inst],  ((700/2)-100, 60))
     screen.blit(blueImage, loc1)
     screen.blit(greenImage, loc2)
@@ -106,7 +133,7 @@ while play:
      
     # --- Limit to 60 frames per second
     
-    counter = counter -1
+    #counter = counter -1
 
     clock.tick(1)
  
