@@ -63,25 +63,25 @@ counter = 3
 while play:
     # --- Main event loop
     for event in pygame.event.get(): 
-        
+        print("LOOK HERE:" + str(pygame.mouse.get_pos()))
         if event.type == pygame.QUIT: # If user clicked close
               play = False # Flag that we are done so we can exit the while loop
         if event.type == pygame.MOUSEBUTTONUP:
-            print( pygame.mouse.get_pos())
+            #print("LOOK HERE:" + str(pygame.mouse.get_pos()))
             mousePos = list(pygame.mouse.get_pos())
             print(colorMatch())
             coord = colorMatch()
-            print(coord[0])
-            print(coord[1])
+            #print(coord[0])
+            #print(coord[1])
 
-            if(mousePos[0]-coord[0] < 20 & mousePos[1]-coord[1] < 20):
+            if(mousePos[0]-coord[0] < 30 & mousePos[1]-coord[1] < 10):
                 print("correct")
-            print(type(pygame.mouse.get_pos()))
+            #print(type(pygame.mouse.get_pos()))
             
             inst = int(random.randint(0,11))
             
             counter = 3
-        if counter == 0 :
+        if counter == 0:
             inst = int(random.randint(0,11))
             counter = 3      
     
@@ -104,8 +104,8 @@ while play:
     
     # --- Drawing code should go here
     # First, clear the screen to white. 
-    screen.fill(WHITE)
-    
+    screen.fill(PINK)
+    #pygame.draw.rect(screen, pygame.Rect(293, 201, 1,4))
     screen.blit(instruction[inst],  ((700/2)-100, 60))
     screen.blit(blueImage, loc1)
     screen.blit(greenImage, loc2)
@@ -116,12 +116,6 @@ while play:
     screen.blit(cText, [0,0])
     
     
-
-    
-    
-
-
-
      #The you can draw different shapes and lines or add text to your background stage.
     
  
