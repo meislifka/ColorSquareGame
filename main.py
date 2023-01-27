@@ -74,30 +74,22 @@ while play:
         if event.type == pygame.QUIT: # If user clicked close
               play = False # Flag that we are done so we can exit the while loop
         if event.type == pygame.MOUSEBUTTONUP:
-            #print("LOOK HERE:" + str(pygame.mouse.get_pos()))
             mousePos = list(pygame.mouse.get_pos())
-            #print("LOOK HERE:" + str(mousePos))
-            #print(colorMatch())
             coord = colorMatch()
-            #print(coord[0])
-            #print(coord[1])
-            #print(str(coord))
-            #print((mousePos[0]-coord[0]))
-            #print((mousePos[1]-coord[1]))
             if(coord[2]==0): #red blue
                 if((mousePos[0]-coord[0]) < 124 and (mousePos[0]-coord[0]) >0 and mousePos[1]-coord[1] < 50 and mousePos[1]-coord[1] >0):
                     print("correct")
                     score = score + 1
+                    inst = int(random.randint(0,11))
                 else:
                     print("WRONG")
             elif(coord[2]==1):
                 if((mousePos[0]-coord[0]) < 200 and (mousePos[0]-coord[0]) >0 and mousePos[1]-coord[1] < 50 and mousePos[1]-coord[1] >0):
                     print("correct")
                     score = score + 1
+                    inst = int(random.randint(0,11))
                 else:
                     print("WRONG")
-            
-            #inst = int(random.randint(0,11))
             counter = maxTime
     
     # --- Game logic should go here
@@ -117,11 +109,8 @@ while play:
     def highScore():
         print("high score")
 
-    
-    
     # --- Drawing code should go here
     screen.fill(PINK)
-
     screen.blit(instruction[inst],  ((XMAX/2)-100, 60))
     screen.blit(blueImage, loc1)
     screen.blit(greenImage, loc2)
@@ -136,9 +125,7 @@ while play:
     
     
      #The you can draw different shapes and lines or add text to your background stage.
-    
- 
- 
+
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
         
