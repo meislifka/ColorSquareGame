@@ -44,8 +44,8 @@ upperleftX = 160
 upperleftY = 150
 loc1 = [upperleftX, upperleftY]
 loc2 = [upperleftX+170, upperleftY]
-loc3 = [upperleftX, upperleftY+50]
-loc4 = [upperleftX+170, upperleftY+50]
+loc3 = [upperleftX, upperleftY+60]
+loc4 = [upperleftX+170, upperleftY+60]
 
 instruction = [Blue, Blue1, Blue2, Green, Green1, Green2, Red, Red1, Red2, Yellow, Yellow1, Yellow2]
 instruction1 = ["Blue", "Blue1", "Blue2", "Green", "Green1", "Green2", "Red", "Red1", "Red2", "Yellow", "Yellow1", "Yellow2"]
@@ -59,23 +59,28 @@ my_font = pygame.font.SysFont('Arial', 30)
 
 inst = int(random.randint(0,11))
 counter = 3
+score = 0
 # -------- Main Program Loop -----------
 while play:
     # --- Main event loop
     for event in pygame.event.get(): 
-        print("LOOK HERE:" + str(pygame.mouse.get_pos()))
         if event.type == pygame.QUIT: # If user clicked close
               play = False # Flag that we are done so we can exit the while loop
         if event.type == pygame.MOUSEBUTTONUP:
             #print("LOOK HERE:" + str(pygame.mouse.get_pos()))
             mousePos = list(pygame.mouse.get_pos())
-            print(colorMatch())
+            print("LOOK HERE:" + str(mousePos))
+            #print(colorMatch())
             coord = colorMatch()
             #print(coord[0])
             #print(coord[1])
-
-            if(mousePos[0]-coord[0] < 30 & mousePos[1]-coord[1] < 10):
+            print(str(coord))
+            print(abs(mousePos[0]-coord[0]))
+            print(abs(mousePos[1]-coord[1]))
+            if(abs(mousePos[0]-coord[0]) < 40 and abs(mousePos[1]-coord[1]) < 20):
                 print("correct")
+                score = score + 1
+                #print(score)
             #print(type(pygame.mouse.get_pos()))
             
             inst = int(random.randint(0,11))
@@ -89,6 +94,7 @@ while play:
     
     # --- Game logic should go here
     def colorMatch():
+        
         c = instruction1[inst]
         print("C0: " + c[0])
         if(c[0]== 'Y'):
@@ -104,7 +110,7 @@ while play:
     
     # --- Drawing code should go here
     # First, clear the screen to white. 
-    screen.fill(PINK)
+    screen.fill(WHITE)
     #pygame.draw.rect(screen, pygame.Rect(293, 201, 1,4))
     screen.blit(instruction[inst],  ((700/2)-100, 60))
     screen.blit(blueImage, loc1)
@@ -114,6 +120,9 @@ while play:
 
     cText = my_font.render(str(int(counter)), False, (0, 0, 0))
     screen.blit(cText, [0,0])
+
+    scoreText = my_font.render("Score: "+str(score), False, (0, 0, 0))
+    screen.blit(scoreText, [0,460])
     
     
      #The you can draw different shapes and lines or add text to your background stage.
