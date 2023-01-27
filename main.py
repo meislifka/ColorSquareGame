@@ -144,14 +144,17 @@ while play:
               #cont = False
             
 
+          
+
     # --- Drawing code should go here
     screen.fill(PINK)
+    
+
     screen.blit(instruction[inst],  ((XMAX/2)-100, 60))
     screen.blit(blueImage, loc1)
     screen.blit(greenImage, loc2)
     screen.blit(redImage, loc3)
     screen.blit(yellowImage, loc4)
-
     cText = my_font.render(str(int(counter)), False, (0, 0, 0))
     screen.blit(cText, [0,0])
 
@@ -164,7 +167,8 @@ while play:
     # --- Limit to 60 frames per second
     counter = counter -1
     if counter < 0:
-            counter = maxTime   
+            counter = maxTime
+            #endGame()  
             
 
     clock.tick(1)
