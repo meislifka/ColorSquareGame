@@ -1,3 +1,5 @@
+#Created by Mei Slifka
+#1/27/22
 import pygame
 import random
 import time
@@ -18,17 +20,17 @@ size = (XMAX,YMAX)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Color Square Game")
 
-# The loop will carry on until the user exits the game (e.g. clicks the close button).
+#Contintue until the user exits the game (e.g. clicks the close button).
 play = True
  
-# The clock will be used to control how fast the screen updates
+#how fast the screen updates
 clock = pygame.time.Clock()
 
+#loading images
 blueImage = pygame.image.load("./iBlue.png")
 redImage = pygame.image.load("./iRed.png")
 greenImage = pygame.image.load("./iGreen.png")
 yellowImage = pygame.image.load("./iYellow.png")
-
 Blue = pygame.image.load("./Blue.png")
 Blue1 = pygame.image.load("./Blue1.png")
 Blue2 = pygame.image.load("./Blue2.png")
@@ -44,6 +46,7 @@ Yellow2 = pygame.image.load("./Yellow2.png")
 again = pygame.image.load("./again.png")
 quit = pygame.image.load("./quit.png")
 
+#Buttons to answer
 upperleftX = 160
 upperleftY = 150
 loc1 = [upperleftX, upperleftY]
@@ -58,9 +61,7 @@ pygame.font.init() # you have to call this at the start,
                    # if you want to use this module.
 my_font = pygame.font.SysFont('Arial', 30)
 
-
 maxTime = 3
-inst = 6
 inst = int(random.randint(0,11))
 counter = maxTime
 score = 0
@@ -68,11 +69,9 @@ score = 0
 while play:
     # --- Main event loop
     for event in pygame.event.get():
+        #speed up 
         if(score >5):
             maxTime = 2
-        if(score > 10):
-            maxTime = 1
-
         if event.type == pygame.QUIT: # If user clicked close
               play = False # Flag that we are done so we can exit the while loop
         if event.type == pygame.MOUSEBUTTONUP:
@@ -80,28 +79,26 @@ while play:
             coord = colorMatch()
             if(coord[2]==0): #red blue
                 if((mousePos[0]-coord[0]) < 124 and (mousePos[0]-coord[0]) >0 and mousePos[1]-coord[1] < 50 and mousePos[1]-coord[1] >0):
-                    print("correct")
+                    #print("correct")
                     score = score + 1
                     inst = int(random.randint(0,11))
-                else:
-                    print("WRONG")
-                    
-                    #play = endGame()
-                    
+                else: #Yellow Green
+                    #print("WRONG")
+                    play = endGame()  
             elif(coord[2]==1):
                 if((mousePos[0]-coord[0]) < 200 and (mousePos[0]-coord[0]) >0 and mousePos[1]-coord[1] < 50 and mousePos[1]-coord[1] >0):
-                    print("correct")
+                    #print("correct")
                     score = score + 1
                     inst = int(random.randint(0,11))
                 else:
-                    print("WRONG")
-          
-                    #play = endGame()
+                    #print("WRONG")
+                    play = endGame()
+                    
                     
                     
             counter = maxTime
     
-    
+    #Returns which color/word is up
     def colorMatch():
         if(inst <= 2): #blue
             print("blue")
@@ -119,7 +116,6 @@ while play:
     
 
     def endGame():
-        time.sleep(1)
         cont = True
         while(cont):
             screen.fill(PINK)
@@ -128,28 +124,22 @@ while play:
             screen.blit(again, loc1)
             screen.blit(quit, loc2)
             pygame.display.flip()
-            if event.type == pygame.MOUSEBUTTONUP:
-                mousePos = list(pygame.mouse.get_pos())
-                print(mousePos)
-                if((mousePos[0]-186) < 124 and mousePos[1]-coord[1] < 50 and mousePos[1]-coord[1] >0): 
-                    print("A")
-                    return(True)
-                if((mousePos[0]-325) < 124 and mousePos[1]-coord[1] < 50 and mousePos[1]-coord[1] >0):
-                    print("q")
-                    return(False)
-                    
-
-                    
-             
-              #cont = False
-            
-
-          
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONUP:
+                    mousePos = list(pygame.mouse.get_pos())
+                    print(mousePos)
+                    if((mousePos[0]-186) < 124 and mousePos[1]-162 < 50 and mousePos[1]-162 >0): 
+                        #print("A")
+                        return(True)
+                    if((mousePos[0]-325) < 200 and mousePos[1]-162 < 50 and mousePos[1]-162>0):
+                        #print("q")
+                        return(False)
+            clock.tick(1)
+       
 
     # --- Drawing code should go here
-    screen.fill(PINK)
     
-
+    screen.fill(PINK)
     screen.blit(instruction[inst],  ((XMAX/2)-100, 60))
     screen.blit(blueImage, loc1)
     screen.blit(greenImage, loc2)
@@ -160,15 +150,15 @@ while play:
 
     scoreText = my_font.render("Score: "+str(score), False, (0, 0, 0))
     screen.blit(scoreText, [0,YMAX-40])
-    
     pygame.display.flip()
         
      
     # --- Limit to 60 frames per second
     counter = counter -1
     if counter < 0:
-            counter = maxTime
-            #endGame()  
+        endGame()
+        screen.fill(BLACK)
+        pygame.display.flip()  
             
 
     clock.tick(1)
